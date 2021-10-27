@@ -11,14 +11,24 @@ function Main(props) {
   const [cards, setCards] = React.useState([]);
 
   useEffect(() => {
-    api.loadUserInfo().then((res) => {
-      setUserName(res.name);
-      setUserDescription(res.about);
-      setUserAvatar(res.avatar);
-    });
-    api.getInitialCards().then((res) => {
-      setCards(res);
-    });
+    api
+      .loadUserInfo()
+      .then((res) => {
+        setUserName(res.name);
+        setUserDescription(res.about);
+        setUserAvatar(res.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    api
+      .getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
@@ -81,8 +91,6 @@ function Main(props) {
       <section className="elements">
         <Card card={cards} fetchData={props.getCardData} />
       </section>
-
-      <div className="template-container"></div>
     </main>
   );
 }
