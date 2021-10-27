@@ -12,6 +12,15 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [imagePen, setImagePen] = React.useState(false);
+
+  function handleMouseEnter() {
+    setImagePen(true);
+  }
+
+  function handleMouseLeave() {
+    setImagePen(false);
+  }
 
   function handleCardClick(card) {
     setSelectedCard(card);
@@ -42,6 +51,9 @@ function App() {
           onAddPlaceClick={handleAddPlaceClick}
           onEditProfileClick={handleEditProfileClick}
           getCardData={handleCardClick}
+          onProfileOver={handleMouseEnter}
+          onProfileLeave={handleMouseLeave}
+          isOpen={imagePen}
         />
         <Footer />
         <PopupWithForm

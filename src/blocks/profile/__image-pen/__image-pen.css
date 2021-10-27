@@ -9,3 +9,7 @@
   transform: translateY(-50%);
   width: 26px;
 }
+
+.profile__image-pen-show {
+  visibility: visible;
+}
