@@ -1,8 +1,9 @@
 {
   "name": "around-react",
-  "homepage": "https://{TomerIrony}.github.io/{around-react}",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
