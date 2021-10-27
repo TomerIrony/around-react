@@ -1,10 +1,9 @@
 function Card(props) {
-  return props.card.map((card, id) => (
+  return (
     <article
       className="card"
-      key={id}
       onClick={() => {
-        props.fetchData(card);
+        props.fetchData(props.card);
       }}
     >
       <button
@@ -15,22 +14,22 @@ function Card(props) {
       ></button>
       <img
         id="cardImage"
-        src={card.link}
-        alt={card.name}
+        src={props.card.link}
+        alt={props.card.name}
         className="card__image"
       />
       <div className="card__caption">
-        <h2 className="card__name">{card.name}</h2>
+        <h2 className="card__name">{props.card.name}</h2>
         <div className="card__group">
           <button
             className="card__like-btn"
             type="button"
             aria-label="like button"
           ></button>
-          <p className="card__like-numbers">{card.likes.length}</p>
+          <p className="card__like-numbers">{}</p>
         </div>
       </div>
     </article>
-  ));
+  );
 }
 export default Card;

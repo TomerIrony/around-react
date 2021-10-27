@@ -89,7 +89,9 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        <Card card={cards} fetchData={props.getCardData} />
+        {cards.map((card) => (
+          <Card card={card} key={card._id} fetchData={props.getCardData} />
+        ))}
       </section>
     </main>
   );
