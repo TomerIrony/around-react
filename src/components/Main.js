@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import editProfilePen from "../images/pen.svg";
 import plusSign from "../images/plussign.svg";
 import api from "../utils/api";
-import InitalCards from "./Card";
+import Card from "./Card";
 
 function Main(props) {
   const [userName, setUserName] = React.useState();
@@ -79,7 +79,7 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        <InitalCards card={cards} fetchData={props.getCardData} />
+        <Card card={cards} fetchData={props.getCardData} />
       </section>
 
       <div className="template-container"></div>

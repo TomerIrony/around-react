@@ -1,4 +1,4 @@
-function InitalCards(props) {
+function Card(props) {
   return props.card.map((card, id) => (
     <article
       className="card"
@@ -33,4 +33,4 @@ function InitalCards(props) {
     </article>
   ));
 }
-export default InitalCards;
+export default Card;
