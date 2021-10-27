@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import editProfilePen from "../images/pen.svg";
 import plusSign from "../images/plussign.svg";
 import api from "../utils/api";
-import InitalCards from "../components/Cards";
+import InitalCards from "./Card";
 
 function Main(props) {
   const [userName, setUserName] = React.useState();
