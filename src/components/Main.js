@@ -38,7 +38,6 @@ function Main(props) {
           <div
             onMouseEnter={props.onProfileOver}
             onMouseLeave={props.onProfileLeave}
-            onClick={props.onEditAvatarClick}
             className="profile__image-container"
           >
             <img
@@ -53,6 +52,7 @@ function Main(props) {
                 props.isOpen ? `profile__image-pen-show` : ""
               }`}
               id="pen"
+              onClick={props.onEditAvatarClick}
             />
           </div>
           <div className="profile__text">
