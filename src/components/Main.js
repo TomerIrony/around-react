@@ -38,13 +38,13 @@ function Main(props) {
           <div
             onMouseEnter={props.onProfileOver}
             onMouseLeave={props.onProfileLeave}
+            onClick={props.onEditAvatarClick}
             className="profile__image-container"
           >
             <img
               className="profile__image"
               src={userAvatar}
               alt="profile image"
-              onClick={props.onEditAvatarClick}
             />
             <img
               src={editProfilePen}
