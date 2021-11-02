@@ -45,6 +45,7 @@ function EditProfilePopup(props) {
           maxLength="40"
           required
           onChange={handleChangeName}
+          defaultValue={name}
         />
         <span className="form__validation userInputfullName-error"></span>
 
@@ -58,6 +59,7 @@ function EditProfilePopup(props) {
           maxLength="200"
           required
           onChange={handleChangeDescription}
+          defaultValue={description}
         />
         <span className="form__validation userInputDescription-error"></span>
       </PopupWithForm>
