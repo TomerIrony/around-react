@@ -39,8 +39,7 @@ class Api {
     return Promise.all([this.getInitialCards(), this.loadUserInfo()]);
   }
 
-  addNewCard(data) {
-    const { title, link } = data;
+  addNewCard(title, link) {
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -82,11 +81,12 @@ class Api {
     }).then(this._checkResponse);
   }
 
-  dislikeCard(cardId) {
-    return fetch(`${this._url}/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._checkResponse);
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return this.likeCard(cardId);
+    } else {
+      return this.removeLike(cardId);
+    }
   }
 }
 
@@ -99,3 +99,9 @@ const api = new Api({
   },
 });
 export default api;
+/* let data = {
+  title: "dd",
+  link: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWF8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80",
+};
+
+api.addNewCard(data); */

@@ -13,6 +13,7 @@ function PopupWithForm(props) {
           onClick={props.onClose}
         ></button>
         <form
+          onSubmit={props.onSubmit}
           action="/"
           name={props.name}
           className="form"

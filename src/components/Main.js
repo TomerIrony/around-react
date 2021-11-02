@@ -1,30 +1,31 @@
 import React, { useEffect } from "react";
 import editProfilePen from "../images/pen.svg";
 import plusSign from "../images/plussign.svg";
-import api from "../utils/api";
 import Card from "./Card";
 
-function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
-  const [cards, setCards] = React.useState([]);
+import {
+  CurrentUserContext,
+  CardsContext,
+} from "../contexts/CurrentUserContext";
 
-  useEffect(() => {
-    api
-      .loadUserInfo()
+function Main(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const initalCards = React.useContext(CardsContext);
+
+  React.useEffect(() => {
+    currentUser
       .then((res) => {
-        setUserName(res.name);
-        setUserDescription(res.about);
-        setUserAvatar(res.avatar);
+        props.setUserData(res);
       })
       .catch((err) => {
         console.log(err);
       });
-    api
-      .getInitialCards()
+  });
+
+  React.useEffect(() => {
+    initalCards
       .then((res) => {
-        setCards(res);
+        props.setCards(res);
       })
       .catch((err) => {
         console.log(err);
@@ -42,7 +43,7 @@ function Main(props) {
           >
             <img
               className="profile__image"
-              src={userAvatar}
+              src={props.userData.avatar}
               alt="profile image"
             />
             <img
@@ -58,7 +59,7 @@ function Main(props) {
           <div className="profile__text">
             <div className="profile__title">
               <h1 className="profile__username" id="fullName">
-                {userName}
+                {props.userData.name}
               </h1>
               <button
                 type="button"
@@ -75,7 +76,7 @@ function Main(props) {
               </button>
             </div>
             <p className="profile__subtitle" id="description">
-              {userDescription}
+              {props.userData.about}
             </p>
           </div>
         </div>
@@ -95,8 +96,15 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        {cards.map((card) => (
-          <Card card={card} key={card._id} fetchData={props.getCardData} />
+        {props.cards.map((card) => (
+          <Card
+            card={card}
+            key={card._id}
+            fetchData={props.getCardData}
+            currentUserId={props.userData._id}
+            onCardLike={props.onCardLike}
+            onCardDelete={props.onCardDelete}
+          />
         ))}
       </section>
     </main>
