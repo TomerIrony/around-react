@@ -12,26 +12,6 @@ function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
   const initalCards = React.useContext(CardsContext);
 
-  React.useEffect(() => {
-    currentUser
-      .then((res) => {
-        props.setUserData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
-  React.useEffect(() => {
-    initalCards
-      .then((res) => {
-        props.setCards(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <main>
       <section className="profile">

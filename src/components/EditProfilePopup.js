@@ -7,11 +7,9 @@ function EditProfilePopup(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    currentUser.then((res) => {
-      setName(res.name);
-      setDescription(res.about);
-    });
-  }, []);
+    setName(currentUser.name);
+    setDescription(currentUser.about);
+  }, [props.isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,44 +24,42 @@ function EditProfilePopup(props) {
   }
 
   return (
-    <>
-      <PopupWithForm
-        name="profile"
-        title="Edit Profile"
-        isOpen={props.isOpen}
-        onClose={props.onClose}
-        buttonText="Save"
-        onSubmit={handleSubmit}
-      >
-        <input
-          className="form__text-input form__input"
-          type="text"
-          name="Full Name"
-          id="userInputfullName"
-          placeholder="Full Name"
-          minLength="2"
-          maxLength="40"
-          required
-          onChange={handleChangeName}
-          defaultValue={name}
-        />
-        <span className="form__validation userInputfullName-error"></span>
+    <PopupWithForm
+      name="profile"
+      title="Edit Profile"
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      buttonText="Save"
+      onSubmit={handleSubmit}
+    >
+      <input
+        className="form__text-input form__input"
+        type="text"
+        name="Full Name"
+        id="userInputfullName"
+        placeholder="Full Name"
+        minLength="2"
+        maxLength="40"
+        required
+        onChange={handleChangeName}
+        value={name}
+      />
+      <span className="form__validation userInputfullName-error"></span>
 
-        <input
-          className="form__text-input form__input"
-          type="text"
-          name="Description"
-          id="userInputDescription"
-          placeholder="Description"
-          minLength="2"
-          maxLength="200"
-          required
-          onChange={handleChangeDescription}
-          defaultValue={description}
-        />
-        <span className="form__validation userInputDescription-error"></span>
-      </PopupWithForm>
-    </>
+      <input
+        className="form__text-input form__input"
+        type="text"
+        name="Description"
+        id="userInputDescription"
+        placeholder="Description"
+        minLength="2"
+        maxLength="200"
+        required
+        onChange={handleChangeDescription}
+        value={description}
+      />
+      <span className="form__validation userInputDescription-error"></span>
+    </PopupWithForm>
   );
 }
 export default EditProfilePopup;

@@ -23,10 +23,64 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({});
   const [imagePen, setImagePen] = React.useState(false);
 
-  const [currentUser, setCurrentUser] = React.useState(api.loadUserInfo());
-  const [initalCards, setInitalCards] = React.useState(api.getInitialCards());
+  const [currentUser, setCurrentUser] = React.useState([]);
+  const [initalCards, setInitalCards] = React.useState([]);
   const [cards, setCards] = React.useState([]);
-  const [userData, setUserData] = React.useState([]);
+  const [userData, setUserData] = React.useState({});
+
+  React.useEffect(() => {
+    api
+      .loadUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+        setUserData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [currentUser.avatar, currentUser.name, currentUser.about]);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((res) => {
+        setInitalCards(res);
+        setCards(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  function handleAddPlaceSubmit(name, link) {
+    api
+      .addNewCard(name, link)
+      .then((newCard) => setCards([newCard, ...cards]))
+      .then(() => closeAllPopups())
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleCardDelete(card) {
+    const deleteId = card._id;
+    const newCardArr = [];
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        cards.filter((card) => {
+          if (!(card._id == deleteId)) {
+            newCardArr.push(card);
+          }
+        });
+      })
+      .then(() => {
+        setCards(newCardArr);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function handleMouseEnter() {
     setImagePen(true);
@@ -61,7 +115,7 @@ function App() {
     api
       .updateUserInfo(name, about)
       .then(() => {
-        setCurrentUser(api.loadUserInfo());
+        setCurrentUser(currentUser.name, currentUser.about);
       })
       .then(() => {
         closeAllPopups();
@@ -75,7 +129,7 @@ function App() {
     api
       .updateProfilePicture(avatar)
       .then(() => {
-        setCurrentUser(api.loadUserInfo());
+        setCurrentUser(currentUser.avatar);
       })
       .then(() => {
         closeAllPopups();
@@ -91,29 +145,6 @@ function App() {
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
       setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
     });
-  }
-
-  function handleCardDelete(card) {
-    api.deleteCard(card._id);
-    const deleteId = card._id;
-    const newCardArr = [];
-    cards.filter((card) => {
-      if (!(card._id == deleteId)) {
-        newCardArr.push(card);
-      }
-    });
-    setCards(newCardArr);
-  }
-
-  function handleAddPlaceSubmit(name, link) {
-    api
-      .addNewCard(name, link)
-      .then(() =>
-        api.getInitialCards().then((res) => {
-          setCards(res);
-        })
-      )
-      .then(() => closeAllPopups());
   }
 
   return (
