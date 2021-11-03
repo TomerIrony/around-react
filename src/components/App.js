@@ -23,28 +23,25 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({});
   const [imagePen, setImagePen] = React.useState(false);
 
-  const [currentUser, setCurrentUser] = React.useState([]);
-  const [initalCards, setInitalCards] = React.useState([]);
+  const [currentUser, setCurrentUser] = React.useState({});
+
   const [cards, setCards] = React.useState([]);
-  const [userData, setUserData] = React.useState({});
 
   React.useEffect(() => {
     api
       .loadUserInfo()
       .then((res) => {
         setCurrentUser(res);
-        setUserData(res);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [currentUser.avatar, currentUser.name, currentUser.about]);
+  }, []);
 
   React.useEffect(() => {
     api
       .getInitialCards()
       .then((res) => {
-        setInitalCards(res);
         setCards(res);
       })
       .catch((err) => {
@@ -114,8 +111,8 @@ function App() {
   function handleUpdateUser(name, about) {
     api
       .updateUserInfo(name, about)
-      .then(() => {
-        setCurrentUser(currentUser.name, currentUser.about);
+      .then((userData) => {
+        setCurrentUser(userData);
       })
       .then(() => {
         closeAllPopups();
@@ -128,8 +125,8 @@ function App() {
   function handleUpdateAvatar(avatar) {
     api
       .updateProfilePicture(avatar)
-      .then(() => {
-        setCurrentUser(currentUser.avatar);
+      .then((userData) => {
+        setCurrentUser(userData);
       })
       .then(() => {
         closeAllPopups();
@@ -140,16 +137,22 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === userData._id);
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+      setCards((state) =>
+        state
+          .map((c) => (c._id === card._id ? newCard : c))
+          .catch((err) => {
+            console.log(err);
+          })
+      );
     });
   }
 
   return (
     <div className="App">
-      <CardsContext.Provider value={initalCards}>
+      <CardsContext.Provider value={cards}>
         <CurrentUserContext.Provider value={currentUser}>
           <div className="root__content">
             <Header />
@@ -165,8 +168,6 @@ function App() {
               setCards={setCards}
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
-              userData={userData}
-              setUserData={setUserData}
             />
             <Footer />
             <EditProfilePopup

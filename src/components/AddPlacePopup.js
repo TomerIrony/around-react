@@ -4,8 +4,6 @@ import React from "react";
 function AddPlacePopup(props) {
   function handleSubmit(e) {
     e.preventDefault();
-    /* console.log(inputRefName.current.value);
-    console.log(inputRefLink.current.value); */
     props.onAddPlaceSubmit(
       inputRefName.current.value,
       inputRefLink.current.value

@@ -10,7 +10,6 @@ import {
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const initalCards = React.useContext(CardsContext);
 
   return (
     <main>
@@ -23,7 +22,7 @@ function Main(props) {
           >
             <img
               className="profile__image"
-              src={props.userData.avatar}
+              src={currentUser.avatar}
               alt="profile image"
             />
             <img
@@ -39,7 +38,7 @@ function Main(props) {
           <div className="profile__text">
             <div className="profile__title">
               <h1 className="profile__username" id="fullName">
-                {props.userData.name}
+                {currentUser.name}
               </h1>
               <button
                 type="button"
@@ -56,7 +55,7 @@ function Main(props) {
               </button>
             </div>
             <p className="profile__subtitle" id="description">
-              {props.userData.about}
+              {currentUser.about}
             </p>
           </div>
         </div>
@@ -81,7 +80,6 @@ function Main(props) {
             card={card}
             key={card._id}
             fetchData={props.getCardData}
-            currentUserId={props.userData._id}
             onCardLike={props.onCardLike}
             onCardDelete={props.onCardDelete}
           />
