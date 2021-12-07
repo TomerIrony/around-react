@@ -3,10 +3,7 @@ import editProfilePen from "../images/pen.svg";
 import plusSign from "../images/plussign.svg";
 import Card from "./Card";
 
-import {
-  CurrentUserContext,
-  CardsContext,
-} from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
   const currentUser = React.useContext(CurrentUserContext);
